@@ -34,6 +34,8 @@ if (!isset($_SESSION['user_id'])) {
     <title>Thrive - Home</title>
     <link rel="stylesheet" href="css/home.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 </head>
@@ -41,25 +43,25 @@ if (!isset($_SESSION['user_id'])) {
 <body class="bg-light">
     <div class="sidebar">
 
-        <h3>THRIVE</h3>
+        <h3><i class="fa-solid fa-chart-line"></i> THRIVE</h3>
 
-        <a href="home.php">Home</a>
+        <a href="home.php"><i class="fa-solid fa-house-user"></i> Home</a>
 
-        <a href="setup_business.php">Business Setup</a>
+        <a href="setup_business.php"><i class="fa-solid fa-shop"></i> Business Setup</a>
 
-        <a href="product_add.php">Products</a>
+        <a href="product_add.php"><i class="fa-solid fa-cube"></i> Products</a>
 
-        <a href="customer_add.php">Customers</a>
+        <a href="customer_add.php"><i class="fa-solid fa-people-line"></i> Customers</a>
 
-        <a href="sale_add.php">Sales</a>
+        <a href="sale_add.php"><i class="fa-solid fa-cart-shopping"></i> Sales</a>
 
-        <a href="sales_history.php">Sales History</a>
+        <a href="sales_history.php"><i class="fa-solid fa-book"></i> Sales History</a>
 
-        <a href="summary.php">Business Summary</a>
+        <a href="summary.php"><i class="fa-solid fa-chart-simple"></i> Business Summary</a>
 
-        <a href="profile.php">Profile</a>
+        <a href="profile.php"><i class="fa-regular fa-user"></i> Profile</a>
 
-        <a href="login.php">Logout</a>
+        <a href="login.php"> <i class="fa-solid fa-right-from-bracket"></i> Logout</a>
 
     </div>
 
