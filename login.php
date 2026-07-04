@@ -1,74 +1,142 @@
 <?php
 session_start();
-?>
 
+$connect = mysqli_connect('localhost', 'root', '', 'thrive');
+
+$error = "";
+
+if (isset($_POST['sb'])) {
+
+	$email = $_POST['mail'];
+	$password = $_POST['pass'];
+
+	$query = "SELECT * FROM users WHERE email='$email'";
+	$result = mysqli_query($connect, $query);
+
+	if (mysqli_num_rows($result) > 0) {
+
+		$user = mysqli_fetch_assoc($result);
+
+		if ($password == $user['password']) {
+
+			$_SESSION['user_id'] = $user['id'];
+
+			header("Location: home.php");
+			exit();
+		} else {
+
+			$error = "Wrong Password";
+		}
+	} else {
+
+		$error = "Account does not exist. Please Register.";
+	}
+}
+?>
 
 <!doctype html>
 <html lang="en">
+
+
+
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login</title>
 
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
+
 </head>
 
-<body style="text-align: center;">
-	<h1>Welcome to Thrive</h1>
-	<h3>Managing Your Business Since 2026</h3>
 
 
-	<form method="POST"> <!-- post = send data to a server or SQL database to create or update a resource -->
-		<h3>Login</h3>
 
-		<label for="email">Email: <label><br>
-
-				<input type="text" name="mail">
-				<br>
-
-				<label for="password">Password : <label>
-						<br>
-						<input type="password" name="pass">
-						<br>
-						<br>
-						<input type="submit" name="sb">
+<body class="bg-light">
 
 
-	</form>
+	<div class="container mt-5">
 
-	<?php
+		<h1 class="text-center">Welcome to Thrive</h1>
 
-	$connect = mysqli_connect('localhost', 'root', '', 'thrive');
+		<h4 class="text-center mb-4">
+			Managing Your Business Since 2026
+		</h4>
+		<br>
+		<br>
+		<br>
 
-	if (isset($_POST['sb'])) {
+		<div class="row justify-content-center">
 
-		$email = $_POST['mail'];
-		$password = $_POST['pass'];
+			<div class="col-md-5 col-lg-4">
 
-		$query = "SELECT * FROM users where email='$email'";
-		$result = mysqli_query($connect, $query);
+				<form method="POST" class="card p-4 shadow">
 
-		// check kortesi je email exist or not
+					<h3 class="text-center mb-3">
+						Login
+					</h3>
 
+					<?php if (!empty($error)) { ?>
 
-		if (mysqli_num_rows($result) > 0) {
+						<div class="alert alert-danger">
+							<?php echo $error; ?>
+						</div>
 
-			$user = mysqli_fetch_assoc($result);
+					<?php } ?>
 
-			if ($password == $user['password']) {
-				$_SESSION['user_id'] = $user['id'];
+					<div class="mb-3">
 
-				header("Location: home.php");
-				exit();
-			} else {
-				echo "Wrong password";
-			}
-		} else {
-			header("Location: register.php");
-		}
-	}
+						<label class="form-label">
+							Email
+						</label>
 
-	?>
+						<input
+							class="form-control"
+							type="email"
+							name="mail"
+							required>
+
+					</div>
+
+					<div class="mb-3">
+
+						<label class="form-label">
+							Password
+						</label>
+
+						<input
+							class="form-control"
+							type="password"
+							name="pass"
+							required>
+
+					</div>
+
+					<input
+						class="btn btn-primary w-100"
+						type="submit"
+						name="sb"
+						value="Login">
+
+					<p class="text-center mt-3 mb-0">
+						Don't have an account?
+						<a href="register.php">
+							Register
+						</a>
+					</p>
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

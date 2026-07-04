@@ -4,50 +4,98 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
+    <title>Register</title>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 
 </head>
 
-<body style="text-align: center;">
-    <h1>Welcome to Thrive</h1>
-    <h4>Managing Your Business Since 2026</h4>
-    <br>
-    <h5 style="color: red;">Your Account doesnt exist</h5>
+<body class="bg-light">
 
-    <form method="POST"> <!-- post = send data to a server or SQL database to create or update a resource -->
-        <h3>Sign Up</h3>
+    <div class="container mt-5">
 
-        <label for="email">Email: <label><br>
+        <h1 class="text-center">Welcome to Thrive</h1>
+        <h4 class="text-center mb-4">Managing Your Business Since 2026</h4>
 
-                <input type="text" name="mail">
-                <br>
+        <br>
+        <div class="row justify-content-center">
 
-                <label for="password">Password : <label>
-                        <br>
-                        <input type="password" name="pass">
-                        <br>
-                        <br>
-                        <input type="submit" name="sb">
+            <div class="col-md-5 col-lg-4">
 
 
-    </form>
+                <form method="POST" class="card p-4 shadow"> <!-- post = send data to a server or SQL database to create or update a resource -->
+                    <h3 class="text-center mb-3">Sign Up</h3>
 
-    <?php
+                    <div class="mb-3">
 
-    $connect = mysqli_connect('localhost', 'root', '', 'thrive');
-
-    if (isset($_POST['sb'])) {
-
-        $name = $_POST['name'];
-        $email = $_POST['mail'];
-        $password = $_POST['pass'];
-
-        $query = "INSERT into users(name,email,password) VALUES('$name','$email','$password')";
-        $execute = mysqli_query($connect, $query);
-    }
+                        <label class="form-label">Email</label>
 
 
-    ?>
+
+                        <input
+                            class="form-control"
+                            type="email"
+                            name="mail"
+                            required>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <label
+                            class="form-label">Password</label>
+                        <input
+                            class="form-control"
+                            type="password"
+                            name="pass"
+                            required>
+                    </div>
+
+                    <input
+                        class="btn btn-primary w-100"
+                        type="submit"
+                        name="sb"
+                        value="Register">
+
+
+                    <p class="text-center mt-3 mb-0">
+                        Already have an account?
+                        <a href="login.php">
+                            Login
+                        </a>
+                    </p>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <?php
+
+        $connect = mysqli_connect('localhost', 'root', '', 'thrive');
+
+        if (isset($_POST['sb'])) {
+
+            $email = $_POST['mail'];
+            $password = $_POST['pass'];
+
+            $query = "INSERT INTO users(email,password) VALUES('$email','$password')";
+
+
+            mysqli_query($connect, $query);
+
+            header("Location: login.php");
+            exit();
+        }
+
+
+        ?>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
