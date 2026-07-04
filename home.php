@@ -1,6 +1,24 @@
 <?php
 session_start();
 
+
+$connect = mysqli_connect(
+    'localhost',
+    'root',
+    '',
+    'thrive'
+);
+
+
+$query = "SELECT COUNT(*) AS total FROM users";
+
+$result = mysqli_query($connect, $query);
+
+$row = mysqli_fetch_assoc($result);
+
+$totalCustomers = $row['total'];
+
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -41,7 +59,7 @@ if (!isset($_SESSION['user_id'])) {
 
         <a href="profile.php">Profile</a>
 
-        <a href="logout.php">Logout</a>
+        <a href="login.php">Logout</a>
 
     </div>
 
@@ -56,7 +74,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="col-md-4">
                 <div class="card shadow p-3">
                     <h4>Total Customers</h4>
-                    <h2>0</h2>
+                    <h2>
+                        <?php echo $totalCustomers; ?>
+                    </h2>
                 </div>
             </div>
 
