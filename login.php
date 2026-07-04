@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -8,18 +13,25 @@
 
 </head>
 
-<body>
-	<h1>Welcome to my business</h1>
+<body style="text-align: center;">
+	<h1>Welcome to Thrive</h1>
+	<h3>Managing Your Business Since 2026</h3>
+
 
 	<form method="POST"> <!-- post = send data to a server or SQL database to create or update a resource -->
-		<label for="username">Username<label>
-				<input type="text" name="name">
-				<label for="email">Email<label>
-						<input type="text" name="mail">
+		<h3>Login</h3>
 
-						<label for="password">Password<label>
-								<input type="password" name="pass">
-								<input type="submit" name="sb">
+		<label for="email">Email: <label><br>
+
+				<input type="text" name="mail">
+				<br>
+
+				<label for="password">Password : <label>
+						<br>
+						<input type="password" name="pass">
+						<br>
+						<br>
+						<input type="submit" name="sb">
 
 
 	</form>
@@ -30,12 +42,30 @@
 
 	if (isset($_POST['sb'])) {
 
-		$name = $_POST['name'];
 		$email = $_POST['mail'];
 		$password = $_POST['pass'];
 
-		$query = "INSERT into users(name,email,password) VALUES('$name','$email','$password')";
-		$execute = mysqli_query($connect, $query);
+		$query = "SELECT * FROM users where email='$email'";
+		$result = mysqli_query($connect, $query);
+
+		// check kortesi je email exist or not
+
+
+		if (mysqli_num_rows($result) > 0) {
+
+			$user = mysqli_fetch_assoc($result);
+
+			if ($password == $user['password']) {
+				$_SESSION['user_id'] = $user['id'];
+
+				header("Location: home.php");
+				exit();
+			} else {
+				echo "Wrong password";
+			}
+		} else {
+			header("Location: register.php");
+		}
 	}
 
 	?>
