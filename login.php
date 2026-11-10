@@ -4,20 +4,23 @@ session_start();
 $connect = mysqli_connect('localhost', 'root', '', 'thrive');
 
 $error = "";
+$loggedOut = isset($_GET['logged_out']);
 
 if (isset($_POST['sb'])) {
 
 	$email = $_POST['mail'];
 	$password = $_POST['pass'];
 
-	$query = "SELECT * FROM users WHERE email='$email'";
-	$result = mysqli_query($connect, $query);
+	$stmt = mysqli_prepare($connect, "SELECT * FROM users WHERE email = ?");
+	mysqli_stmt_bind_param($stmt, "s", $email);
+	mysqli_stmt_execute($stmt);
+	$result = mysqli_stmt_get_result($stmt);
 
 	if (mysqli_num_rows($result) > 0) {
 
 		$user = mysqli_fetch_assoc($result);
 
-		if ($password == $user['password']) {
+		if (password_verify($password, $user['password'])) {
 
 			$_SESSION['user_id'] = $user['id'];
 
@@ -82,6 +85,14 @@ if (isset($_POST['sb'])) {
 
 						<div class="alert alert-danger">
 							<?php echo $error; ?>
+						</div>
+
+					<?php } ?>
+
+					<?php if ($loggedOut) { ?>
+
+						<div class="alert alert-success">
+							Successfully logged out.
 						</div>
 
 					<?php } ?>

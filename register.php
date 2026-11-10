@@ -5,8 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register</title>
+    <link rel="stylesheet" href="css/home.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+
 
 </head>
 
@@ -80,9 +85,13 @@
         if (isset($_POST['sb'])) {
 
             $email = $_POST['mail'];
-            $password = $_POST['pass'];
+            $password = password_hash(
+                $_POST['pass'],
+                PASSWORD_DEFAULT
+            );
 
-            $query = "INSERT INTO users(email,password) VALUES('$email','$password')";
+            $query = "INSERT INTO users(email,password)
+VALUES('$email','$password')";
 
 
             mysqli_query($connect, $query);
